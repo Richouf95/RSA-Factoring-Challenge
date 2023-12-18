@@ -1,0 +1,63 @@
+#!/usr/bin/python3
+
+import time
+import sys
+
+def factoriser_nombre(nombre):
+    """Factorise un nombre en un produit de deux nombres."""
+    diviseur = 2
+    while diviseur * diviseur <= nombre:
+        if nombre % diviseur == 0:
+            autre_facteur = nombre // diviseur
+            return f"{nombre}={diviseur}*{autre_facteur}"
+        diviseur += 1
+    return None
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python factors.py <fichier>")
+        sys.exit(1)
+
+    nom_fichier = sys.argv[1]
+
+    # Mesurer le temps de début
+    temps_debut = time.time()
+
+    try:
+        with open(nom_fichier, 'r') as fichier:
+            for ligne in fichier:
+                nombre = int(ligne.strip())
+
+                # Mesurer le temps utilisateur et système avant l'exécution
+                user_start, sys_start = time.process_time(), time.process_time()
+
+                # Exécuter la factorisation
+                resultat = factoriser_nombre(nombre)
+
+                # Mesurer le temps utilisateur et système après l'exécution
+                user_end, sys_end = time.process_time(), time.process_time()
+
+                # Calculer les temps écoulés
+                user_time = user_end - user_start
+                sys_time = sys_end - sys_start
+
+                if resultat:
+                    print(resultat)
+                else:
+                    print(f"Aucune factorisation trouvée pour {nombre}")
+
+    except FileNotFoundError:
+        print(f"Le fichier '{nom_fichier}' n'a pas été trouvé.")
+    except ValueError:
+        print("Le contenu du fichier n'est pas un nombre entier valide.")
+
+    # Mesurer le temps de fin
+    temps_fin = time.time()
+
+    # Calculer le temps réel écoulé
+    temps_total = temps_fin - temps_debut
+
+    print(f"\nTemps réel : {temps_total:.3f}s")
+    print(f"Temps utilisateur : {user_time:.3f}s")
+    print(f"Temps système : {sys_time:.3f}s")
+

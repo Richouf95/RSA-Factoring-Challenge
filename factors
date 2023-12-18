@@ -23,12 +23,10 @@ if __name__ == "__main__":
             currentTime = time.time()
             diff = currentTime - startTime
             if diff > 5:
-                print("\n----\nHehe\n----\n")
                 break;
             number = int(line.strip())
             result = factorize(number)
             if result:
-                print(diff)
                 print(result)
     now = time.time() - startTime
     print(now)
